@@ -145,11 +145,13 @@ ConfigDialog::ConfigDialog()
 
   inputModeComboBox->addItem(tr("Romaji"));
   inputModeComboBox->addItem(tr("Kana"));
+  inputModeComboBox->addItem(tr("SimulKana"));
 #ifdef OS_WIN
   // These options changing the preedit method by a hot key are only
   // supported by Windows.
   inputModeComboBox->addItem(tr("Romaji (switchable)"));
   inputModeComboBox->addItem(tr("Kana (switchable)"));
+  inputModeComboBox->addItem(tr("SimulKana (switchable)"));
 #endif  // OS_WIN
 
   spaceCharacterFormComboBox->addItem(tr("Follow input mode"));

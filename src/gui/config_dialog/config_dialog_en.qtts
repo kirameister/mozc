@@ -21,6 +21,7 @@
     <message>
         <location filename="config_dialog.ui" line="185"/>
         <location filename="config_dialog.ui" line="192"/>
+        <location filename="config_dialog.ui" line="199"/>
         <source>Customize...</source>
         <translation></translation>
     </message>
@@ -40,8 +41,13 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="config_dialog.ui" line="199"/>
+        <location filename="config_dialog.ui" line="206"/>
         <source>Romaji table</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="config_dialog.ui" line="213"/>
+        <source>SimulKana input</source>
         <translation></translation>
     </message>
     <message>
@@ -488,135 +494,140 @@
 <context>
     <name>mozc::gui::ConfigDialog</name>
     <message>
-        <location filename="config_dialog.cc" line="130"/>
+        <location filename="config_dialog.cc" line="137"/>
         <source>Custom keymap</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="config_dialog.cc" line="131"/>
+        <location filename="config_dialog.cc" line="138"/>
         <source>ATOK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="config_dialog.cc" line="132"/>
+        <location filename="config_dialog.cc" line="139"/>
         <source>MS-IME</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="config_dialog.cc" line="133"/>
+        <location filename="config_dialog.cc" line="140"/>
         <source>Kotoeri</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="config_dialog.cc" line="139"/>
+        <location filename="config_dialog.cc" line="146"/>
         <source>Romaji</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="config_dialog.cc" line="140"/>
+        <location filename="config_dialog.cc" line="147"/>
         <source>Kana</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="config_dialog.cc" line="144"/>
-        <source>Romaji (switchable)</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="config_dialog.cc" line="145"/>
-        <source>Kana (switchable)</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="config_dialog.cc" line="148"/>
-        <location filename="config_dialog.cc" line="164"/>
-        <source>Follow input mode</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="config_dialog.cc" line="149"/>
-        <location filename="config_dialog.cc" line="165"/>
-        <source>Fullwidth</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="config_dialog.cc" line="150"/>
-        <location filename="config_dialog.cc" line="166"/>
-        <source>Halfwidth</source>
+        <source>SimulKana</source>
         <translation></translation>
     </message>
     <message>
         <location filename="config_dialog.cc" line="152"/>
-        <source>No shortcut</source>
+        <source>Romaji (switchable)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="config_dialog.cc" line="153"/>
-        <source>1 -- 9</source>
-        <translation>1–9</translation>
-    </message>
-    <message>
-        <location filename="config_dialog.cc" line="154"/>
-        <source>A -- L</source>
-        <translation>A–L</translation>
-    </message>
-    <message>
-        <location filename="config_dialog.cc" line="156"/>
-        <source>Yes</source>
+        <source>Kana (switchable)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="config_dialog.cc" line="157"/>
-        <source>Yes (don&apos;t record new data)</source>
+        <location filename="config_dialog.cc" line="173"/>
+        <source>Follow input mode</source>
         <translation></translation>
     </message>
     <message>
         <location filename="config_dialog.cc" line="158"/>
-        <source>No</source>
+        <location filename="config_dialog.cc" line="174"/>
+        <source>Fullwidth</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="config_dialog.cc" line="160"/>
-        <source>Off</source>
+        <location filename="config_dialog.cc" line="159"/>
+        <location filename="config_dialog.cc" line="175"/>
+        <source>Halfwidth</source>
         <translation></translation>
     </message>
     <message>
         <location filename="config_dialog.cc" line="161"/>
-        <source>Alphanumeric</source>
+        <source>No shortcut</source>
         <translation></translation>
     </message>
     <message>
         <location filename="config_dialog.cc" line="162"/>
-        <source>Katakana</source>
+        <source>1 -- 9</source>
+        <translation>1–9</translation>
+    </message>
+    <message>
+        <location filename="config_dialog.cc" line="163"/>
+        <source>A -- L</source>
+        <translation>A–L</translation>
+    </message>
+    <message>
+        <location filename="config_dialog.cc" line="165"/>
+        <source>Yes</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="config_dialog.cc" line="166"/>
+        <source>Yes (don&apos;t record new data)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="config_dialog.cc" line="167"/>
-        <source>Direct input</source>
+        <source>No</source>
         <translation></translation>
     </message>
     <message>
         <location filename="config_dialog.cc" line="169"/>
-        <source>0</source>
+        <source>Off</source>
         <translation></translation>
     </message>
     <message>
         <location filename="config_dialog.cc" line="170"/>
-        <source>1</source>
+        <source>Alphanumeric</source>
         <translation></translation>
     </message>
     <message>
         <location filename="config_dialog.cc" line="171"/>
+        <source>Katakana</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="config_dialog.cc" line="176"/>
+        <source>Direct input</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="config_dialog.cc" line="178"/>
+        <source>0</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="config_dialog.cc" line="179"/>
+        <source>1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="config_dialog.cc" line="180"/>
         <source>2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="config_dialog.cc" line="173"/>
+        <location filename="config_dialog.cc" line="182"/>
         <source>Yen Sign Â¥</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="config_dialog.cc" line="174"/>
+        <location filename="config_dialog.cc" line="183"/>
         <source>Backslash \</source>
         <translation></translation>
     </message>
