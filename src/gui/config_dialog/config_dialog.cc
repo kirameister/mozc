@@ -59,6 +59,7 @@
 #include "gui/base/util.h"
 #include "gui/config_dialog/keymap_editor.h"
 #include "gui/config_dialog/roman_table_editor.h"
+#include "gui/config_dialog/simulkana_table_editor.h"
 #include "protocol/config.pb.h"
 #include "session/internal/keymap.h"
 
@@ -218,6 +219,8 @@ ConfigDialog::ConfigDialog()
                    SLOT(ResetToDefaults()));
   QObject::connect(editRomanTableButton, SIGNAL(clicked()), this,
                    SLOT(EditRomanTable()));
+  QObject::connect(editSimulKanaTableButton, SIGNAL(clicked()), this,
+                   SLOT(EditSimulKanaTable()));
   QObject::connect(inputModeComboBox, SIGNAL(currentIndexChanged(int)), this,
                    SLOT(SelectInputModeSetting(int)));
   QObject::connect(useAutoConversion, SIGNAL(stateChanged(int)), this,
@@ -508,6 +511,7 @@ void ConfigDialog::ConvertFromProto(const config::Config &config) {
 
   custom_keymap_table_ = config.custom_keymap_table();
   custom_roman_table_ = config.custom_roman_table();
+  custom_simulkana_table_ = config.custom_simulkana_table();
 
   // tab2
   SET_COMBOBOX(historyLearningLevelComboBox, HistoryLearningLevel,
@@ -594,6 +598,10 @@ void ConfigDialog::ConvertToProto(config::Config *config) const {
   config->clear_custom_roman_table();
   if (!custom_roman_table_.empty()) {
     config->set_custom_roman_table(custom_roman_table_);
+  }
+  config->clear_custom_simulkana_table();
+  if (!custom_simulkana_table_.empty()) {
+    config->set_custom_simulkana_table(custom_simulkana_table_);
   }
 
   // tab2
@@ -780,9 +788,18 @@ void ConfigDialog::EditRomanTable() {
   }
 }
 
+void ConfigDialog::EditSimulKanaTable() {
+  std::string output;
+  if (gui::SimulKanaTableEditorDialog::Show(this, custom_simulkana_table_, &output)) {
+    custom_simulkana_table_ = output;
+  }
+}
+
 void ConfigDialog::SelectInputModeSetting(int index) {
   // enable "EDIT" button if roman mode is selected
   editRomanTableButton->setEnabled((index == 0));
+  // enable "EDIT" button if simulkana mode is selected
+  editSimulKanaTableButton->setEnabled((index == 2));
 }
 
 void ConfigDialog::SelectAutoConversionSetting(int state) {

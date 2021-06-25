@@ -926,4 +926,85 @@
         <translation></translation>
     </message>
 </context>
+<context>
+    <name>mozc::gui::SimulKanaTableEditorDialog</name>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="36"/>
+        <source>New entry</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="38"/>
+        <source>Remove selected entries</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="41"/>
+        <source>Import from file...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="43"/>
+        <source>Export to file...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="46"/>
+        <source>Reset to defaults</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="48"/>
+        <source>[ProductName] Romaji table editor</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="48"/>
+        <source>[ProductName] SimulKana table editor</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="52"/>
+        <source>Input</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="52"/>
+        <source>Output</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="52"/>
+        <source>Next input</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="131"/>
+        <location filename="simulkana_table_editor.cc" line="152"/>
+        <location filename="simulkana_table_editor.cc" line="192"/>
+        <location filename="simulkana_table_editor.cc" line="219"/>
+        <source>[ProductName] settings</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="132"/>
+        <source>You can&apos;t have more than %1 entries</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="153"/>
+        <source>Romaji to Kana table is empty.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="193"/>
+        <source>Input fields contain capital characters. &quot;Shift-mode-switch&quot; function should be Off with this new mapping.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="220"/>
+        <source>Do you want to overwrite the current roman table?</source>
+        <translation></translation>
+    </message>
+</context>
 </TS>

@@ -951,4 +951,85 @@
         <translation>現在のローマ字テーブルを上書きしますか？</translation>
     </message>
 </context>
+<context>
+    <name>mozc::gui::SimulKanaTableEditorDialog</name>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="36"/>
+        <source>New entry</source>
+        <translation>新しいエントリー</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="38"/>
+        <source>Remove selected entries</source>
+        <translation>選択されたエントリーを削除</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="41"/>
+        <source>Import from file...</source>
+        <translation>インポート...</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="43"/>
+        <source>Export to file...</source>
+        <translation>エクスポート...</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="46"/>
+        <source>Reset to defaults</source>
+        <translation>初期値に戻す</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="48"/>
+        <source>[ProductName] Romaji table editor</source>
+        <translation>[ProductName]ローマ字テーブル設定</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="48"/>
+        <source>[ProductName] SimulKana table editor</source>
+        <translation>[ProductName]同時押しかなテーブル設定</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="52"/>
+        <source>Input</source>
+        <translation>入力</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="52"/>
+        <source>Output</source>
+        <translation>出力</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="52"/>
+        <source>Next input</source>
+        <translation>次の入力</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="131"/>
+        <location filename="simulkana_table_editor.cc" line="152"/>
+        <location filename="simulkana_table_editor.cc" line="192"/>
+        <location filename="simulkana_table_editor.cc" line="219"/>
+        <source>[ProductName] settings</source>
+        <translation>[ProductName]プロパティ</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="132"/>
+        <source>You can&apos;t have more than %1 entries</source>
+        <translation>%1 個以上のエントリーは登録できません</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="153"/>
+        <source>Romaji to Kana table is empty.</source>
+        <translation>ローマ字テーブルが空です</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="193"/>
+        <source>Input fields contain capital characters. &quot;Shift-mode-switch&quot; function should be Off with this new mapping.</source>
+        <translation>入力フィールドに大文字のアルファベットが含まれています。新しい設定では「シフトキーによる入力切替」をオフにしてください。</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="220"/>
+        <source>Do you want to overwrite the current roman table?</source>
+        <translation>現在のローマ字テーブルを上書きしますか？</translation>
+    </message>
+</context>
 </TS>

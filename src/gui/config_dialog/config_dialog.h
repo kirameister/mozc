@@ -78,6 +78,7 @@ class ConfigDialog : public QDialog, private Ui::ConfigDialog {
   virtual void EditUserDictionary();
   virtual void EditKeymap();
   virtual void EditRomanTable();
+  virtual void EditSimulKanaTable();
   virtual void ResetToDefaults();
   virtual void SelectInputModeSetting(int index);
   virtual void SelectAutoConversionSetting(int state);
@@ -103,6 +104,7 @@ class ConfigDialog : public QDialog, private Ui::ConfigDialog {
   std::unique_ptr<client::ClientInterface> client_;
   std::string custom_keymap_table_;
   std::string custom_roman_table_;
+  std::string custom_simulkana_table_;
   config::Config::InformationListConfig information_list_config_;
   int initial_preedit_method_;
   bool initial_use_keyboard_to_change_preedit_method_;

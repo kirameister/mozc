@@ -1825,6 +1825,7 @@
   <tabstop>keymapSettingComboBox</tabstop>
   <tabstop>editKeymapButton</tabstop>
   <tabstop>editRomanTableButton</tabstop>
+  <tabstop>editSimulKanaTableButton</tabstop>
   <tabstop>historyLearningLevelComboBox</tabstop>
   <tabstop>clearUserHistoryButton</tabstop>
   <tabstop>editUserDictionaryButton</tabstop>

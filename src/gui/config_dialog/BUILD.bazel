@@ -106,6 +106,14 @@ qt_moc_mozc(
     outs = ["moc_roman_table_editor.cc"],
 )
 
+qt_moc_mozc(
+    name = "moc_simulkana_table_editor",
+    srcs = [
+        "simulkana_table_editor.h",
+    ],
+    outs = ["moc_simulkana_table_editor.cc"],
+)
+
 qt_uic_mozc(
     name = "uic_config_dialog",
     srcs = [
@@ -167,6 +175,7 @@ cc_qt_library_mozc(
         "keybinding_editor_delegate.cc",
         "keymap_editor.cc",
         "roman_table_editor.cc",
+        "simulkana_table_editor.cc",
         ":moc_character_form_editor",
         ":moc_config_dialog",
         ":moc_generic_table_editor",
@@ -174,6 +183,7 @@ cc_qt_library_mozc(
         ":moc_keybinding_editor_delegate",
         ":moc_keymap_editor",
         ":moc_roman_table_editor",
+        ":moc_simulkana_table_editor",
         ":qrc_config_dialog",
     ],
     hdrs = [
@@ -184,6 +194,7 @@ cc_qt_library_mozc(
         "keybinding_editor_delegate.h",
         "keymap_editor.h",
         "roman_table_editor.h",
+        "simulkana_table_editor.h",
         ":uic_config_dialog",
         ":uic_generic_table_editor",
         ":uic_keybinding_editor",
