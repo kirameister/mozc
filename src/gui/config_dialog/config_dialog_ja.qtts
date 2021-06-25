@@ -43,6 +43,11 @@
         <source>Input from numpad keys</source>
         <translation>テンキーからの入力</translation>
     </message>
+    <message utf8="true">
+        <location filename="config_dialog.ui" line="147"/>
+        <source>Input from ¥ or backslash key</source>
+        <translation>¥キーで入力する文字</translation>
+    </message>
     <message>
         <location filename="config_dialog.ui" line="172"/>
         <source>Keymap style</source>
@@ -56,19 +61,14 @@
         <translation>編集...</translation>
     </message>
     <message>
+        <location filename="config_dialog.ui" line="206"/>
+        <source>Romaji table</source>
+        <translation>ローマ字テーブル</translation>
+    </message>
+    <message>
         <location filename="config_dialog.ui" line="218"/>
         <source>Basics</source>
         <translation>基本設定</translation>
-    </message>
-    <message utf8="true">
-        <location filename="config_dialog.ui" line="147"/>
-        <source>Input from ¥ or backslash key</source>
-        <translation>¥キーで入力する文字</translation>
-    </message>
-    <message>
-        <location filename="config_dialog.ui" line="998"/>
-        <source>Privacy</source>
-        <translation>プライバシー</translation>
     </message>
     <message>
         <location filename="config_dialog.ui" line="250"/>
@@ -76,9 +76,9 @@
         <translation>キー設定</translation>
     </message>
     <message>
-        <location filename="config_dialog.ui" line="1213"/>
-        <source>Cloud</source>
-        <translation>クラウド</translation>
+        <location filename="config_dialog.ui" line="998"/>
+        <source>Privacy</source>
+        <translation>プライバシー</translation>
     </message>
     <message>
         <location filename="config_dialog.ui" line="272"/>
@@ -206,11 +206,6 @@
         <translation>ユーザ辞書の編集...</translation>
     </message>
     <message>
-        <location filename="config_dialog.ui" line="206"/>
-        <source>Romaji table</source>
-        <translation>ローマ字テーブル</translation>
-    </message>
-    <message>
         <location filename="config_dialog.ui" line="213"/>
         <source>SimulKana input</source>
         <translation>同時押しかな入力</translation>
@@ -309,6 +304,11 @@
         <location filename="config_dialog.ui" line="1191"/>
         <source>Presentation mode</source>
         <translation>プレゼンテーションモード</translation>
+    </message>
+    <message>
+        <location filename="config_dialog.ui" line="1213"/>
+        <source>Cloud</source>
+        <translation>クラウド</translation>
     </message>
     <message>
         <location filename="config_dialog.ui" line="1263"/>

@@ -9,8 +9,43 @@
         <translation></translation>
     </message>
     <message>
+        <location filename="config_dialog.ui" line="57"/>
+        <source>General</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="config_dialog.ui" line="92"/>
         <source>Input mode</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="config_dialog.ui" line="99"/>
+        <source>Punctuation style</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="config_dialog.ui" line="106"/>
+        <source>Symbol style</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="config_dialog.ui" line="113"/>
+        <source>Space input style</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="config_dialog.ui" line="123"/>
+        <source>Candidate selection shortcut</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="config_dialog.ui" line="130"/>
+        <source>Input from numpad keys</source>
+        <translation></translation>
+    </message>
+    <message utf8="true">
+        <location filename="config_dialog.ui" line="147"/>
+        <source>Input from ¥ or backslash key</source>
         <translation></translation>
     </message>
     <message>
@@ -26,13 +61,13 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="config_dialog.ui" line="218"/>
-        <source>Basics</source>
+        <location filename="config_dialog.ui" line="206"/>
+        <source>Romaji table</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="config_dialog.ui" line="998"/>
-        <source>Privacy</source>
+        <location filename="config_dialog.ui" line="218"/>
+        <source>Basics</source>
         <translation></translation>
     </message>
     <message>
@@ -41,8 +76,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="config_dialog.ui" line="206"/>
-        <source>Romaji table</source>
+        <location filename="config_dialog.ui" line="998"/>
+        <source>Privacy</source>
         <translation></translation>
     </message>
     <message>
@@ -199,41 +234,6 @@
     <message>
         <location filename="config_dialog.ui" line="1051"/>
         <source>Usage statistics and crash reports</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="config_dialog.ui" line="57"/>
-        <source>General</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="config_dialog.ui" line="99"/>
-        <source>Punctuation style</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="config_dialog.ui" line="106"/>
-        <source>Symbol style</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="config_dialog.ui" line="113"/>
-        <source>Space input style</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="config_dialog.ui" line="123"/>
-        <source>Candidate selection shortcut</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="config_dialog.ui" line="130"/>
-        <source>Input from numpad keys</source>
-        <translation></translation>
-    </message>
-    <message utf8="true">
-        <location filename="config_dialog.ui" line="147"/>
-        <source>Input from ¥ or backslash key</source>
         <translation></translation>
     </message>
     <message>
