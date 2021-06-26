@@ -61,7 +61,7 @@ const char kSimulKanaTableFile[] = "system://shingeta.tsv";
 }  // namespace
 
 SimulKanaTableEditorDialog::SimulKanaTableEditorDialog(QWidget *parent)
-    : GenericTableEditorDialog(parent, 3) {
+    : GenericTableEditorDialog(parent, 4) {
   actions_.reset(new QAction *[MENU_SIZE]);
   actions_[NEW_INDEX] = mutable_edit_menu()->addAction(tr("New entry"));
   actions_[REMOVE_INDEX] =
@@ -79,12 +79,12 @@ SimulKanaTableEditorDialog::SimulKanaTableEditorDialog(QWidget *parent)
   GuiUtil::ReplaceWidgetLabels(this);
   dialog_title_ = GuiUtil::ReplaceString(tr("[ProductName] settings"));
   CHECK(mutable_table_widget());
-  CHECK_EQ(mutable_table_widget()->columnCount(), 3);
+  CHECK_EQ(mutable_table_widget()->columnCount(), 4);
   QStringList headers;
-  headers << tr("Input") << tr("Output") << tr("Next input");
+  headers << tr("Key1") << tr("Key2") << tr("Output") << tr("SimulLimit");
   mutable_table_widget()->setHorizontalHeaderLabels(headers);
 
-  resize(330, 350);
+  resize(530, 450);
 
   UpdateMenuStatus();
 }

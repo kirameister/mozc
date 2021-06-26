@@ -989,19 +989,24 @@
         <translation>[ProductName]同時押しかなテーブル設定</translation>
     </message>
     <message>
-        <location filename="simulkana_table_editor.cc" line="52"/>
-        <source>Input</source>
-        <translation>入力</translation>
+        <location filename="simulkana_table_editor.cc" line="84"/>
+        <source>Key1</source>
+        <translation>キー1</translation>
     </message>
     <message>
-        <location filename="simulkana_table_editor.cc" line="52"/>
+        <location filename="simulkana_table_editor.cc" line="84"/>
+        <source>Key2</source>
+        <translation>キー2</translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="84"/>
         <source>Output</source>
         <translation>出力</translation>
     </message>
     <message>
-        <location filename="simulkana_table_editor.cc" line="52"/>
-        <source>Next input</source>
-        <translation>次の入力</translation>
+        <location filename="simulkana_table_editor.cc" line="84"/>
+        <source>SimulLimit</source>
+        <translation>同時押しリミット</translation>
     </message>
     <message>
         <location filename="simulkana_table_editor.cc" line="131"/>

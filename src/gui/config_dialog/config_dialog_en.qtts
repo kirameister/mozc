@@ -964,18 +964,23 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="simulkana_table_editor.cc" line="52"/>
-        <source>Input</source>
+        <location filename="simulkana_table_editor.cc" line="84"/>
+        <source>Key1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="simulkana_table_editor.cc" line="52"/>
+        <location filename="simulkana_table_editor.cc" line="84"/>
+        <source>Key2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="84"/>
         <source>Output</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="simulkana_table_editor.cc" line="52"/>
-        <source>Next input</source>
+        <location filename="simulkana_table_editor.cc" line="84"/>
+        <source>SimulLimit</source>
         <translation></translation>
     </message>
     <message>
