@@ -136,6 +136,9 @@ message Config {
   // custom roman table
   optional bytes custom_roman_table = 43;
 
+  // custom simul key table
+  optional bytes custom_simulkana_table = 44;
+
   enum PunctuationMethod {
     KUTEN_TOUTEN = 0;
     COMMA_PERIOD = 1;
