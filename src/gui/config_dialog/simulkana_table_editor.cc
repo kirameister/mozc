@@ -81,10 +81,10 @@ SimulKanaTableEditorDialog::SimulKanaTableEditorDialog(QWidget *parent)
   CHECK(mutable_table_widget());
   CHECK_EQ(mutable_table_widget()->columnCount(), 4);
   QStringList headers;
-  headers << tr("Key1") << tr("Key2") << tr("Output") << tr("SimulLimit");
+  headers << tr("Key1") << tr("Key2") << tr("Output") << tr("Limit (ms)");
   mutable_table_widget()->setHorizontalHeaderLabels(headers);
 
-  resize(530, 450);
+  resize(440, 450);
 
   UpdateMenuStatus();
 }

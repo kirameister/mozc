@@ -210,9 +210,12 @@
        <item row="2" column="0">
         <widget class="QLabel" name="label_13">
          <property name="text">
-          <string>SimulKana input</string>
+          <string>SimulKana input limit (ms)</string>
          </property>
         </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="lineEdit"/>
        </item>
       </layout>
      </widget>

@@ -207,8 +207,8 @@
     </message>
     <message>
         <location filename="config_dialog.ui" line="213"/>
-        <source>SimulKana input</source>
-        <translation>同時押しかな入力</translation>
+        <source>SimulKana input limit (ms)</source>
+        <translation>同時押しかな入力リミット (ms)</translation>
     </message>
     <message>
         <location filename="config_dialog.ui" line="397"/>
@@ -1005,8 +1005,8 @@
     </message>
     <message>
         <location filename="simulkana_table_editor.cc" line="84"/>
-        <source>SimulLimit</source>
-        <translation>同時押しリミット</translation>
+        <source>Limit (ms)</source>
+        <translation>リミット (ms)</translation>
     </message>
     <message>
         <location filename="simulkana_table_editor.cc" line="131"/>
