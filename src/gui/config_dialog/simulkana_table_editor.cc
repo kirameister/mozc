@@ -221,7 +221,7 @@ bool SimulKanaTableEditorDialog::Update() {
     if(!key2.empty()){
         *table += key2;
         *table += '\t';
-        *table =+ key1;
+        *table += key1;
         *table += '\t';
         *table += output;
         if (!simullimit.empty()) {
