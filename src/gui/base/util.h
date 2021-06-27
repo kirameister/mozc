@@ -64,6 +64,9 @@ class GuiUtil {
   // Replace placeholders in the string.
   static QString ReplaceString(const QString &str);
 
+  // check if given value is castable to int and if value is within sane range
+  static bool CheckIntWithRange(std::string str);
+
  private:
   GuiUtil() = delete;
   virtual ~GuiUtil() = delete;

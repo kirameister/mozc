@@ -163,5 +163,14 @@ QString GuiUtil::ReplaceString(const QString &str) {
                           GuiUtil::ProductName());
 }
 
+// static
+bool GuiUtil::CheckIntWithRange(std::string str) {
+  if (std::all_of(str.cbegin(), str.cend(), isdigit) && 20 <= stoi(str) && stoi(str) < 999) {
+    return true;
+  }
+  return false;
+}
+
+
 }  // namespace gui
 }  // namespace mozc

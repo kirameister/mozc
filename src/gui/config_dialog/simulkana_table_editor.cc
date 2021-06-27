@@ -192,6 +192,7 @@ bool SimulKanaTableEditorDialog::Update() {
   }
 
   std::unordered_map<std::string, std::string> intermediate_comb_table;
+  bool non_number_contained = false;
   bool contains_capital = false;
   std::string *table = mutable_table();
   table->clear();
@@ -213,8 +214,12 @@ bool SimulKanaTableEditorDialog::Update() {
       *table += '\t';
       *table += output;
       if (!simullimit.empty()) {
-        *table += '\t';
-        *table += simullimit;
+        if (!GuiUtil::CheckIntWithRange(simullimit)) {
+          non_number_contained = true;
+        } else {
+          *table += '\t';
+          *table += simullimit;
+        }
       }
       *table += '\n';
     } else { // if key2 is present, permutation needs to happen
@@ -230,8 +235,12 @@ bool SimulKanaTableEditorDialog::Update() {
         *table += '\t';
         *table += output;
         if (!simullimit.empty()) {
-          *table += '\t';
-          *table += simullimit;
+          if (!GuiUtil::CheckIntWithRange(simullimit)) {
+            non_number_contained = true;
+          } else {
+            *table += '\t';
+            *table += simullimit;
+          }
         }
         *table += '\n';
       }
@@ -243,8 +252,12 @@ bool SimulKanaTableEditorDialog::Update() {
         *table += '\t';
         *table += output;
         if (!simullimit.empty()) {
-          *table += '\t';
-          *table += simullimit;
+          if (!GuiUtil::CheckIntWithRange(simullimit)) {
+            non_number_contained = true;
+          } else {
+            *table += '\t';
+            *table += simullimit;
+          }
         }
         *table += '\n';
         intermediate_comb_table[key2 + '\t' + key1] = output + '\t' + simullimit;
@@ -268,6 +281,13 @@ bool SimulKanaTableEditorDialog::Update() {
                              tr("Input fields contain capital characters. "
                                 "\"Shift-mode-switch\" function is disabled "
                                 "with this new mapping."));
+  }
+
+  if (non_number_contained) {
+    QMessageBox::information(this, dialog_title_,
+                             tr("Simul limit value needs to be integer "
+                                "and between 20 and 999. "
+                                "Non-satisfactory value will be ignored."));
   }
 
   return true;
@@ -328,5 +348,6 @@ bool SimulKanaTableEditorDialog::Show(QWidget *parent,
 
   return result;
 }
+
 }  // namespace gui
 }  // namespace mozc
