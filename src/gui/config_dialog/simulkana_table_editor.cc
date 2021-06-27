@@ -216,16 +216,27 @@ bool SimulKanaTableEditorDialog::Update() {
       *table += simullimit;
     }
     *table += '\n';
+    // if key2 is present, permutation needs to happen
+    // please note that there's no consistency-checking mechanism in place (yet), so should inconsistency occur, the one comes towards the bottom takes priority (BTW this seems to be the behavior of Romaji table as well)
+    if(!key2.empty()){
+        *table += key2;
+        *table += '\t';
+        *table =+ key1;
+        *table += '\t';
+        *table += output;
+        if (!simullimit.empty()) {
+          *table += '\t';
+          *table += simullimit;
+        }
+        *table += '\n';
+    }
 
     if (!contains_capital) {
-      std::string lower = key1;
-      Util::LowerString(&lower);
-      contains_capital = (lower != key1);
-    }
-    if (!contains_capital) {
-      std::string lower = key2;
-      Util::LowerString(&lower);
-      contains_capital = (lower != key2);
+      std::string lower1 = key1;
+      Util::LowerString(&lower1);
+      std::string lower2 = key2;
+      Util::LowerString(&lower2);
+      contains_capital = ((lower1 != key1) || (lower2 != key2));
     }
   }
 
