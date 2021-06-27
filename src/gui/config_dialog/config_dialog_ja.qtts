@@ -1022,9 +1022,9 @@
         <translation>%1 個以上のエントリーは登録できません</translation>
     </message>
     <message>
-        <location filename="simulkana_table_editor.cc" line="153"/>
-        <source>Romaji to Kana table is empty.</source>
-        <translation>ローマ字テーブルが空です</translation>
+        <location filename="simulkana_table_editor.cc" line="190"/>
+        <source>SimulKana table is empty.</source>
+        <translation>同時押しかなテーブルが空です</translation>
     </message>
     <message>
         <location filename="simulkana_table_editor.cc" line="193"/>

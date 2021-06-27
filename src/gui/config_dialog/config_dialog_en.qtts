@@ -980,7 +980,7 @@
     </message>
     <message>
         <location filename="simulkana_table_editor.cc" line="84"/>
-        <source>SimulLimit</source>
+        <source>Limit (ms)</source>
         <translation></translation>
     </message>
     <message>
@@ -997,8 +997,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="simulkana_table_editor.cc" line="153"/>
-        <source>Romaji to Kana table is empty.</source>
+        <location filename="simulkana_table_editor.cc" line="190"/>
+        <source>SimulKana table is empty.</source>
         <translation></translation>
     </message>
     <message>

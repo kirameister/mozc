@@ -104,16 +104,18 @@ std::string SimulKanaTableEditorDialog::GetDefaultSimulKanaTable() {
     Util::ChopReturns(&line);
     fields.clear();
     Util::SplitStringAllowEmpty(line, "\t", &fields);
-    if (fields.size() < 2) {
-      VLOG(3) << "field size < 2";
+    if (fields.size() < 3) {
+      VLOG(3) << "field size < 3";
       continue;
     }
     result += fields[0];
     result += '\t';
     result += fields[1];
-    if (fields.size() >= 3) {
+    result += '\t';
+    result += fields[2];
+    if (fields.size() >= 4) {
       result += '\t';
-      result += fields[2];
+      result += fields[3];
     }
     result += '\n';
   }
@@ -136,26 +138,29 @@ bool SimulKanaTableEditorDialog::LoadFromStream(std::istream *is) {
 
     fields.clear();
     Util::SplitStringAllowEmpty(line, "\t", &fields);
-    if (fields.size() < 2) {
-      VLOG(3) << "field size < 2";
+    if (fields.size() < 3) {
+      VLOG(3) << "field size < 3";
       continue;
     }
 
-    if (fields.size() == 2) {
+    if (fields.size() == 3) {
       fields.push_back("");
     }
 
-    QTableWidgetItem *input =
+    QTableWidgetItem *key1 =
         new QTableWidgetItem(QString::fromUtf8(fields[0].c_str()));
-    QTableWidgetItem *output =
+    QTableWidgetItem *key2 =
         new QTableWidgetItem(QString::fromUtf8(fields[1].c_str()));
-    QTableWidgetItem *pending =
+    QTableWidgetItem *output =
         new QTableWidgetItem(QString::fromUtf8(fields[2].c_str()));
+    QTableWidgetItem *simullimit =
+        new QTableWidgetItem(QString::fromUtf8(fields[3].c_str()));
 
     mutable_table_widget()->insertRow(row);
-    mutable_table_widget()->setItem(row, 0, input);
-    mutable_table_widget()->setItem(row, 1, output);
-    mutable_table_widget()->setItem(row, 2, pending);
+    mutable_table_widget()->setItem(row, 0, key1);
+    mutable_table_widget()->setItem(row, 1, key2);
+    mutable_table_widget()->setItem(row, 2, output);
+    mutable_table_widget()->setItem(row, 3, simullimit);
     ++row;
 
     if (row >= max_entry_size()) {
@@ -182,7 +187,7 @@ bool SimulKanaTableEditorDialog::LoadDefaultSimulKanaTable() {
 bool SimulKanaTableEditorDialog::Update() {
   if (mutable_table_widget()->rowCount() == 0) {
     QMessageBox::warning(this, dialog_title_,
-                         tr("Romaji to Kana table is empty."));
+                         tr("SimulKana table is empty."));
     return false;
   }
 
@@ -190,28 +195,37 @@ bool SimulKanaTableEditorDialog::Update() {
   std::string *table = mutable_table();
   table->clear();
   for (int i = 0; i < mutable_table_widget()->rowCount(); ++i) {
-    const std::string &input =
+    const std::string &key1 =
         TableUtil::SafeGetItemText(mutable_table_widget(), i, 0).toStdString();
-    const std::string &output =
+    const std::string &key2 =
         TableUtil::SafeGetItemText(mutable_table_widget(), i, 1).toStdString();
-    const std::string &pending =
+    const std::string &output =
         TableUtil::SafeGetItemText(mutable_table_widget(), i, 2).toStdString();
-    if (input.empty() || (output.empty() && pending.empty())) {
+    const std::string &simullimit =
+        TableUtil::SafeGetItemText(mutable_table_widget(), i, 3).toStdString();
+    if (key1.empty() || output.empty()) {
       continue;
     }
-    *table += input;
+    *table += key1;
+    *table += '\t';
+    *table += key2;
     *table += '\t';
     *table += output;
-    if (!pending.empty()) {
+    if (!simullimit.empty()) {
       *table += '\t';
-      *table += pending;
+      *table += simullimit;
     }
     *table += '\n';
 
     if (!contains_capital) {
-      std::string lower = input;
+      std::string lower = key1;
       Util::LowerString(&lower);
-      contains_capital = (lower != input);
+      contains_capital = (lower != key1);
+    }
+    if (!contains_capital) {
+      std::string lower = key2;
+      Util::LowerString(&lower);
+      contains_capital = (lower != key2);
     }
   }
 
