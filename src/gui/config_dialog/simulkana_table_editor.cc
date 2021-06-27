@@ -191,6 +191,7 @@ bool SimulKanaTableEditorDialog::Update() {
     return false;
   }
 
+  std::unordered_map<std::string, std::string> intermediate_comb_table;
   bool contains_capital = false;
   std::string *table = mutable_table();
   table->clear();
@@ -206,19 +207,36 @@ bool SimulKanaTableEditorDialog::Update() {
     if (key1.empty() || output.empty()) {
       continue;
     }
-    *table += key1;
-    *table += '\t';
-    *table += key2;
-    *table += '\t';
-    *table += output;
-    if (!simullimit.empty()) {
+    if (key2.empty()) {
+      *table += key1;
       *table += '\t';
-      *table += simullimit;
-    }
-    *table += '\n';
-    // if key2 is present, permutation needs to happen
-    // please note that there's no consistency-checking mechanism in place (yet), so should inconsistency occur, the one comes towards the bottom takes priority (BTW this seems to be the behavior of Romaji table as well)
-    if(!key2.empty()){
+      *table += '\t';
+      *table += output;
+      if (!simullimit.empty()) {
+        *table += '\t';
+        *table += simullimit;
+      }
+      *table += '\n';
+    } else { // if key2 is present, permutation needs to happen
+      if (key1.compare(key2)==0) { // if key1==key2, ignore this entry
+        continue;
+      }
+      // please note that whatever comes at first will be taken
+      if (intermediate_comb_table[key1 + '\t' + key2].empty()) {
+        intermediate_comb_table[key1 + '\t' + key2] = output + '\t' + simullimit;
+        *table += key1;
+        *table += '\t';
+        *table += key2;
+        *table += '\t';
+        *table += output;
+        if (!simullimit.empty()) {
+          *table += '\t';
+          *table += simullimit;
+        }
+        *table += '\n';
+      }
+      // start of consistency check
+      if (intermediate_comb_table[key2 + '\t' + key1].empty()) { // reversed combination does not exist yet..
         *table += key2;
         *table += '\t';
         *table += key1;
@@ -229,6 +247,8 @@ bool SimulKanaTableEditorDialog::Update() {
           *table += simullimit;
         }
         *table += '\n';
+        intermediate_comb_table[key2 + '\t' + key1] = output + '\t' + simullimit;
+      }
     }
 
     if (!contains_capital) {
