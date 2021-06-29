@@ -213,14 +213,6 @@ bool SimulKanaTableEditorDialog::Update() {
       *table += '\t';
       *table += '\t';
       *table += output;
-      if (!simullimit.empty()) {
-        if (!GuiUtil::CheckIntWithRange(simullimit)) {
-          non_number_contained = true;
-        } else {
-          *table += '\t';
-          *table += simullimit;
-        }
-      }
       *table += '\n';
     } else { // if key2 is present, permutation needs to happen
       if (key1.compare(key2)==0) { // if key1==key2, ignore this entry
