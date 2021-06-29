@@ -1011,5 +1011,10 @@
         <source>Do you want to overwrite the current roman table?</source>
         <translation></translation>
     </message>
+    <message>
+        <location filename="simulkana_table_editor.cc" line="288"/>
+        <source>Simul limit value needs to be integer and between 20 and 999. Non-satisfactory value will be ignored.</source>
+        <translation>リミットの入力フィールドに数値以外の値が含まれているか、値が期待された範囲に収まりません。デフォルトの値が仕様されます。</translation>
+    </message>
 </context>
 </TS>
