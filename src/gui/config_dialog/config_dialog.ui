@@ -215,7 +215,7 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLineEdit" name="SimulKanaLimit"/>
+        <widget class="QLineEdit" name="defaultSimulKanaLimit"/>
        </item>
       </layout>
      </widget>
@@ -1829,7 +1829,7 @@
   <tabstop>editKeymapButton</tabstop>
   <tabstop>editRomanTableButton</tabstop>
   <tabstop>editSimulKanaTableButton</tabstop>
-  <tabstop>SimulKanaLimit</tabstop>
+  <tabstop>defaultSimulKanaLimit</tabstop>
   <tabstop>historyLearningLevelComboBox</tabstop>
   <tabstop>clearUserHistoryButton</tabstop>
   <tabstop>editUserDictionaryButton</tabstop>
