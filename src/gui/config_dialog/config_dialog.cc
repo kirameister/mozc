@@ -462,7 +462,7 @@ void ConfigDialog::GetSendStatsCheckBox() const {
   } while (0)
 
 namespace {
-static const int kPreeditMethodSize = 2;
+static const int kPreeditMethodSize = 3;
 
 void SetComboboxForPreeditMethod(const config::Config &config,
                                  QComboBox *combobox) {
