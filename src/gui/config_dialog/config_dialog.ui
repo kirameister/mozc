@@ -1829,6 +1829,7 @@
   <tabstop>editKeymapButton</tabstop>
   <tabstop>editRomanTableButton</tabstop>
   <tabstop>editSimulKanaTableButton</tabstop>
+  <tabstop>SimulKanaLimit</tabstop>
   <tabstop>historyLearningLevelComboBox</tabstop>
   <tabstop>clearUserHistoryButton</tabstop>
   <tabstop>editUserDictionaryButton</tabstop>
