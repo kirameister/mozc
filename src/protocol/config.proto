@@ -281,6 +281,11 @@ message Config {
   // e.g. sunkai -> 深海
   optional bool use_typing_correction = 66 [default = false];
 
+  // (mili-second) limit to recognize whether or not key strokes are
+  // to be considered as simultaneous stroke
+  optional int32 default_simullimit = 67 [default = 100];
+
+
   //////////////////////////////////////////////////////////////
   //
   // Dictionary (80-99)

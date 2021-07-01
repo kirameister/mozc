@@ -105,7 +105,6 @@ class ConfigDialog : public QDialog, private Ui::ConfigDialog {
   std::string custom_keymap_table_;
   std::string custom_roman_table_;
   std::string custom_simulkana_table_;
-  std::string default_simullimit;
   config::Config::InformationListConfig information_list_config_;
   int initial_preedit_method_;
   bool initial_use_keyboard_to_change_preedit_method_;

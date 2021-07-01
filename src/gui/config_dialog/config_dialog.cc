@@ -512,6 +512,8 @@ void ConfigDialog::ConvertFromProto(const config::Config &config) {
   custom_keymap_table_ = config.custom_keymap_table();
   custom_roman_table_ = config.custom_roman_table();
   custom_simulkana_table_ = config.custom_simulkana_table();
+  // simul limit load
+  defaultSimulKanaLimitLineEdit->setText(QString::number(config.default_simullimit()));
 
   // tab2
   SET_COMBOBOX(historyLearningLevelComboBox, HistoryLearningLevel,
@@ -603,6 +605,7 @@ void ConfigDialog::ConvertToProto(config::Config *config) const {
   if (!custom_simulkana_table_.empty()) {
     config->set_custom_simulkana_table(custom_simulkana_table_);
   }
+  // simul limit save
 
   // tab2
   GET_COMBOBOX(historyLearningLevelComboBox, HistoryLearningLevel,
