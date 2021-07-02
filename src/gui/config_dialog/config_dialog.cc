@@ -363,6 +363,13 @@ bool ConfigDialog::Update() {
   config::Config config;
   ConvertToProto(&config);
 
+  if (!GuiUtil::CheckIntWithRange(defaultSimulKanaLimitLineEdit->text().toUtf8().constData())) {
+    QMessageBox::warning(this, windowTitle(),
+                             tr("Default simul limit value needs to be "
+                                "integer and between 20 and 999. "
+                                "Value will not be updated."));
+  }
+
   if (config.session_keymap() == config::Config::CUSTOM &&
       config.custom_keymap_table().empty()) {
     QMessageBox::warning(this, windowTitle(),
@@ -512,7 +519,7 @@ void ConfigDialog::ConvertFromProto(const config::Config &config) {
   custom_keymap_table_ = config.custom_keymap_table();
   custom_roman_table_ = config.custom_roman_table();
   custom_simulkana_table_ = config.custom_simulkana_table();
-  // simul limit load
+  // simul limit load (from proto to LineEdit)
   defaultSimulKanaLimitLineEdit->setText(QString::number(config.default_simullimit()));
 
   // tab2
@@ -605,7 +612,10 @@ void ConfigDialog::ConvertToProto(config::Config *config) const {
   if (!custom_simulkana_table_.empty()) {
     config->set_custom_simulkana_table(custom_simulkana_table_);
   }
-  // simul limit save
+  // simul limit save (form LineEdit to proto)
+  if (GuiUtil::CheckIntWithRange(defaultSimulKanaLimitLineEdit->text().toUtf8().constData())) {
+    config->set_default_simullimit(defaultSimulKanaLimitLineEdit->text().toInt());
+  }
 
   // tab2
   GET_COMBOBOX(historyLearningLevelComboBox, HistoryLearningLevel,
@@ -867,6 +877,7 @@ bool ConfigDialog::eventFilter(QObject *obj, QEvent *event) {
   }
   return QObject::eventFilter(obj, event);
 }
+
 
 }  // namespace gui
 }  // namespace mozc

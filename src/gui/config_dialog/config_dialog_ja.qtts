@@ -725,6 +725,11 @@
         <source>Apply</source>
         <translation>適用</translation>
     </message>
+    <message>
+        <location filename="config_table.cc" line="613"/>
+        <source>Default simul limit value needs to be integer and between 20 and 999. Value will not be updated.</source>
+        <translation>デフォルトの同時押し判定の入力フィールドに数値以外の値が含まれているか、値が期待された範囲 (20-999) に収まりません。以前の値が使用されます。</translation>
+    </message>
 </context>
 <context>
     <name>mozc::gui::GenericTableEditorDialog</name>

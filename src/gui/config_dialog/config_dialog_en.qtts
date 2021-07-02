@@ -701,6 +701,11 @@
  - Administrator settings</source>
         <translation></translation>
     </message>
+    <message>
+        <location filename="config_table.cc" line="613"/>
+        <source>Default simul limit value needs to be integer and between 20 and 999. Value will not be updated.</source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>mozc::gui::GenericTableEditorDialog</name>
@@ -1014,7 +1019,7 @@
     <message>
         <location filename="simulkana_table_editor.cc" line="288"/>
         <source>Simul limit value needs to be integer and between 20 and 999. Non-satisfactory value will be ignored.</source>
-        <translation>リミットの入力フィールドに数値以外の値が含まれているか、値が期待された範囲に収まりません。デフォルトの値が仕様されます。</translation>
+        <translation></translation>
     </message>
 </context>
 </TS>
