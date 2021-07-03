@@ -215,6 +215,10 @@ bool Table::InitializeWithRequestAndConfig(
     case config::Config::KANA:
       result = LoadFromFile(kRomajiPreeditTableFile);
       break;
+    // simul kana
+    case config::Config::SIMULKANA:
+      result = LoadFromString(config.custom_simulkana_table());
+      break;
     default:
       LOG(ERROR) << "Unkonwn preedit method: " << config.preedit_method();
       break;
