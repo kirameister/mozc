@@ -169,6 +169,9 @@ class Table {
   // Typing model. nullptr if no corresponding model is available.
   std::unique_ptr<const TypingModel> typing_model_;
 
+  // Simultaneous key-stroke judgement value -- 0 if preedit_method is not SIMULKANA.
+  uint32 default_simullimit_;
+
   DISALLOW_COPY_AND_ASSIGN(Table);
 };
 

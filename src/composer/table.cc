@@ -205,6 +205,7 @@ bool Table::InitializeWithRequestAndConfig(
       return true;
     }
   }
+  default_simullimit_ = 0;
   switch (config.preedit_method()) {
     case config::Config::ROMAN:
       result = (config.has_custom_roman_table() &&
@@ -217,6 +218,7 @@ bool Table::InitializeWithRequestAndConfig(
       break;
     // simul kana
     case config::Config::SIMULKANA:
+      default_simullimit_ = config.default_simullimit();
       result = LoadFromString(config.custom_simulkana_table());
       break;
     default:
@@ -458,18 +460,46 @@ bool Table::LoadFromStream(std::istream *is) {
 
     std::vector<std::string> rules;
     Util::SplitStringAllowEmpty(line, "\t", &rules);
-    if (rules.size() == 4) {
-      const TableAttributes attributes = ParseAttributes(rules[3]);
-      AddRuleWithAttributes(rules[0], rules[1], rules[2], attributes);
-    } else if (rules.size() == 3) {
-      AddRule(rules[0], rules[1], rules[2]);
-    } else if (rules.size() == 2) {
-      AddRule(rules[0], rules[1], empty_pending);
-    } else {
-      if (line[0] != '#') {
-        LOG(ERROR) << "Format error: " << line;
+    // separation between ROMAN and SIMULKANA needs to happen here
+    if (!default_simullimit_) {
+      if (rules.size() == 4) {
+        const TableAttributes attributes = ParseAttributes(rules[3]);
+        AddRuleWithAttributes(rules[0], rules[1], rules[2], attributes);
+        VLOG(2) << "hogege " << line;
+      } else if (rules.size() == 3) {
+        AddRule(rules[0], rules[1], rules[2]);
+        VLOG(2) << "hogege " << line;
+      } else if (rules.size() == 2) {
+        AddRule(rules[0], rules[1], empty_pending);
+        VLOG(2) << "hogege " << line;
+      } else {
+        if (line[0] != '#') {
+          LOG(ERROR) << "Format error: " << line;
+        }
+        continue;
       }
-      continue;
+    } else { // SIMULKANA
+      if (rules[1].empty()) { // if it's single stroke, it's easy
+        AddRule(rules[0], rules[1], rules[2]);
+      } else if (rules.size() == 3 || rules.size() == 4) {
+        // Please note that by using LookUp here (within the same loop,
+        // we are assumign that the single-stroke entries always come 
+        // before the simul-stroke entries.
+        const mozc::composer::Entry *entry = nullptr;
+        entry = LookUp(rules[0]);
+        VLOG(2) << "AKhoge " << rules[0] << "\t" << rules[1];
+        if (entry != nullptr && entry->pending() != empty_pending) {
+          AddRule(entry->pending()+rules[1], rules[2], empty_pending);
+          VLOG(2) << "AKhoge " << entry->pending()+rules[1] << "\t" << rules[2];
+        }
+      } else if (rules.size() == 4) { // TODO to implement independent limit
+        //AddRule(rules[0], rules[2], rules[1]);
+      } else {
+        if (line[0] != '#') {
+          LOG(ERROR) << "Format error: " << line;
+        }
+        continue;
+      }
     }
   }
 
