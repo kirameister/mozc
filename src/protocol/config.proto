@@ -283,7 +283,7 @@ message Config {
 
   // (mili-second) limit to recognize whether or not key strokes are
   // to be considered as simultaneous stroke
-  optional int32 default_simullimit = 67 [default = 100];
+  optional uint32 default_simullimit = 67 [default = 100];
 
 
   //////////////////////////////////////////////////////////////
