@@ -30,6 +30,8 @@
 #include "composer/internal/composition.h"
 
 #include <memory>
+#include <iostream>
+#include <chrono>
 
 #include "base/logging.h"
 #include "base/util.h"
@@ -57,6 +59,7 @@ void Composition::Erase() {
 size_t Composition::InsertAt(size_t pos, const std::string &input) {
   CompositionInput composition_input;
   composition_input.set_raw(input);
+  VLOG(1) << "InsertAt ";
   return InsertInput(pos, composition_input);
 }
 
@@ -66,10 +69,13 @@ size_t Composition::InsertKeyAndPreeditAt(const size_t pos,
   CompositionInput composition_input;
   composition_input.set_raw(key);
   composition_input.set_conversion(preedit);
+  VLOG(1) << "InsertKeyAndPreeditAt ";
   return InsertInput(pos, composition_input);
 }
 
 size_t Composition::InsertInput(size_t pos, const CompositionInput &input) {
+  //VLOG(1) << "InsertInput";
+  VLOG(1) << "InsertInput " << input.raw();
   if (input.Empty()) {
     return pos;
   }
@@ -78,12 +84,20 @@ size_t Composition::InsertInput(size_t pos, const CompositionInput &input) {
   MaybeSplitChunkAt(pos, &right_chunk);
 
   CharChunkList::iterator left_chunk = GetInsertionChunk(&right_chunk);
+  VLOG(1) << "AKHoge right pointer:  " << *right_chunk;
+  VLOG(1) << "AKHoge left pointer:   " << *left_chunk;
+  VLOG(1) << "AKHoge input:          " << input.raw();
   CombinePendingChunks(left_chunk, input);
 
   CompositionInput mutable_input;
   mutable_input.CopyFrom(input);
+  VLOG(1) << "CombinePendingChunks right p: " << *right_chunk;
+  VLOG(1) << "CombinePendingChunks left p:  " << *left_chunk;
+  VLOG(1) << "CombinePendingChunks input:         " << input.raw();
   while (true) {
+    VLOG(1) << "mutable_input:  " << &mutable_input;
     (*left_chunk)->AddCompositionInput(&mutable_input);
+    VLOG(1) << "mutable_input2: " << &mutable_input;
     if (mutable_input.Empty()) {
       break;
     }
@@ -391,8 +405,10 @@ CharChunk *Composition::MaybeSplitChunkAt(const size_t pos,
 void Composition::CombinePendingChunks(CharChunkList::iterator it,
                                        const CompositionInput &input) {
   // Combine |**it| and |**(--it)| into |**it| as long as possible.
+  VLOG(1) << "CombinePendingChunks " << input.raw();
   const std::string &next_input =
       input.has_conversion() ? input.conversion() : input.raw();
+  VLOG(1) << "next input : " << next_input;
 
   while (it != chunks_.begin()) {
     CharChunkList::iterator left_it = it;
@@ -417,6 +433,17 @@ CharChunkList::iterator Composition::InsertChunk(CharChunkList::iterator *it) {
 const CharChunkList &Composition::GetCharChunkList() const { return chunks_; }
 
 bool Composition::ShouldCommit() const {
+    /*
+  // check if the simultaneous key strokes should be detected
+  int32 elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()-previous_key_pressed_time_).count();
+  auto previous_key_pressed_time_ = std::chrono::system_clock::now();
+  VLOG(2) << "AKhoge ShouldCommit " << elapsed; 
+  if (table_->default_simullimit_ && table_->default_simullimit_ < elapsed) {
+    VLOG(2) << "AKhoge previous_key_pressed_time_ " << elapsed; 
+    return true;
+  }
+  // end of simultaneous key stroke check
+  */
   for (CharChunkList::const_iterator it = chunks_.begin(); it != chunks_.end();
        ++it) {
     if (!(*it)->ShouldCommit()) {

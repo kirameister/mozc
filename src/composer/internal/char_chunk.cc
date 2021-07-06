@@ -32,6 +32,10 @@
 #include <set>
 #include <string>
 #include <vector>
+// following required for simulkana
+#include <iostream>
+#include <chrono>
+
 
 #include "base/logging.h"
 #include "base/util.h"
@@ -115,6 +119,9 @@ CharChunk::CharChunk(Transliterators::Transliterator transliterator,
       attributes_(NO_TABLE_ATTRIBUTE),
       local_length_cache_(std::string::npos) {
   DCHECK_NE(Transliterators::LOCAL, transliterator);
+  // initialize previously-pressed key
+  previous_key_pressed_time_ = std::chrono::system_clock::now();
+  VLOG(1) << "CharChunk initialization";
 }
 
 void CharChunk::Clear() {
@@ -298,13 +305,52 @@ void CharChunk::Combine(const CharChunk &left_chunk) {
 bool CharChunk::AddInputInternal(std::string *input) {
   const bool kNoLoop = false;
 
+
   size_t key_length = 0;
   bool fixed = false;
   std::string key = pending_ + *input;
-  const Entry *entry = table_->LookUpPrefix(key, &key_length, &fixed);
+  const Entry* entry = table_->LookUpPrefix(key, &key_length, &fixed);
   local_length_cache_ = std::string::npos;
 
+  VLOG(2) << "key_length : " << key_length;
+  VLOG(2) << "entry : " << entry; 
+  VLOG(2) << "fixed? : " << fixed; 
+  VLOG(1) << "0 AddInputInternal raw_:     " << raw_;
+  VLOG(1) << "0 AddInputInternal convers_: " << conversion_;
+  VLOG(1) << "0 AddInputInternal pending_: " << pending_;
+  VLOG(1) << "0 AddInputInternal ambiguo_: " << ambiguous_;
+
+
+  // check if simulkana limit has passed
+  int32 elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()-previous_key_pressed_time_).count();
+  VLOG(2) << "AKhoge 0.1 SimulKana check " << elapsed; 
+  if (table_->default_simullimit_) { // preedit = SIMULKANA
+    if (table_->default_simullimit_ < elapsed ||
+            entry == nullptr) {
+      // time limit passed 
+      // or there is no entry defined = must treat separately
+      VLOG(2) << "elapsed time " << elapsed << " is greater than limit, so conv-submit needs to happen"; 
+      conversion_.append(pending_);
+      pending_.clear();
+      ambiguous_.clear();
+      key = *input;
+      // this line is required for properly processing the latest typed key
+      entry = table_->LookUpPrefix(key, &key_length, &fixed);
+    } else {
+      VLOG(2) << "elapsed time " << elapsed << " is less than limit, so mutaiton may happen"; 
+      //raw_.append(*input);
+      //input->clear();
+      //conversion_.append(entry->result());
+      //pending_ = entry->pending();
+      //ambiguous_.clear();
+    }
+  }
+  previous_key_pressed_time_ = std::chrono::system_clock::now();
+  // simulkana process until here
+
+
   if (entry == nullptr) {
+    VLOG(1) << "AKhoge 1.0 AddInputInternal";
     if (key_length == 0) {
       // No prefix character is not contained in the table, fallback
       // operation is performed.
@@ -316,6 +362,7 @@ bool CharChunk::AddInputInternal(std::string *input) {
     }
 
     if (key_length < pending_.size()) {
+      VLOG(1) << "AKhoge AddInputInternal";
       // Do not modify this char_chunk, all key characters will be used
       // by the next char_chunk.
       return kNoLoop;
@@ -328,8 +375,13 @@ bool CharChunk::AddInputInternal(std::string *input) {
 
     // Conversion data had only pending.
     const std::string new_pending_chars(*input, 0, key_length);
+    VLOG(1) << "1 AddInputInternal new_pend: " << new_pending_chars;
     raw_.append(new_pending_chars);
+    VLOG(1) << "1 AddInputInternal raw_:     " << raw_;
+    VLOG(1) << "1 AddInputInternal convers_: " << conversion_;
     pending_.append(new_pending_chars);
+    VLOG(1) << "1 AddInputInternal pending_: " << pending_;
+    VLOG(1) << "1 AddInputInternal ambiguo_: " << ambiguous_;
     if (!ambiguous_.empty()) {
       // If ambiguous_ has already a value, ambiguous_ is appended.
       // ex. "ny" makes ambiguous_ "んy", but "sh" leaves ambiguous_ empty.
@@ -339,9 +391,12 @@ bool CharChunk::AddInputInternal(std::string *input) {
     return kNoLoop;
   }
 
-  // The prefix of key reached a conversion result, thus entry is not nullptr.
 
+
+  // The prefix of key reached a conversion result, thus entry is not nullptr.
+  VLOG(1) << "AKhoge 1.7 AddInputInternal";
   if (key.size() == key_length) {
+    VLOG(1) << "AKhoge 1.8 AddInputInternal";
     const bool is_following_entry =
         (!conversion_.empty() ||
          (!raw_.empty() && !pending_.empty() && raw_ != pending_));
@@ -351,24 +406,51 @@ bool CharChunk::AddInputInternal(std::string *input) {
     if (fixed) {
       // The whole key has been used, table lookup has reached a fixed
       // value.  It is a stable world. (like "ka->か", "q@->だ").
+      VLOG(1) << "2 AKhoge AddInputInternal if 1";
+      VLOG(1) << "2 AddInputInternal raw_:     " << raw_;
+      VLOG(1) << "2 AddInputInternal convers_: " << conversion_;
+      VLOG(1) << "2 AddInputInternal pending_: " << pending_;
+      VLOG(1) << "2 AddInputInternal ambiguo_: " << ambiguous_;
       conversion_.append(entry->result());
       pending_ = entry->pending();
       ambiguous_.clear();
+      VLOG(1) << "3 AddInputInternal raw_:     " << raw_;
+      VLOG(1) << "3 AddInputInternal convers_: " << conversion_;
+      VLOG(1) << "3 AddInputInternal pending_: " << pending_;
+      VLOG(1) << "3 AddInputInternal ambiguo_: " << ambiguous_;
 
       // If this entry is the first entry, the table attributes are
       // applied to this chunk.
       if (!is_following_entry) {
+        VLOG(1) << "AKhoge AddInputInternal if 2";
         attributes_ = entry->attributes();
+        VLOG(1) << "3.5 AddInputInternal raw_:     " << raw_;
+        VLOG(1) << "3.5 AddInputInternal convers_: " << conversion_;
+        VLOG(1) << "3.5 AddInputInternal pending_: " << pending_;
+        VLOG(1) << "3.5 AddInputInternal ambiguo_: " << ambiguous_;
       }
     } else {  // !fixed
       // The whole string of key reached a conversion result, but the
       // result is ambiguous (like "n" with "n->ん and na->な").
+      VLOG(1) << "3.7 AddInputInternal raw_:     " << raw_;
+      VLOG(1) << "3.7 AddInputInternal convers_: " << conversion_;
+      VLOG(1) << "3.7 AddInputInternal pending_: " << pending_;
+      VLOG(1) << "3.7 AddInputInternal ambiguo_: " << ambiguous_;
       pending_ = key;
       ambiguous_ = entry->result();
+      VLOG(1) << "3.8 AddInputInternal raw_:     " << raw_;
+      VLOG(1) << "3.8 AddInputInternal convers_: " << conversion_;
+      VLOG(1) << "3.8 AddInputInternal pending_: " << pending_;
+      VLOG(1) << "3.8 AddInputInternal ambiguo_: " << ambiguous_;
     }
+    VLOG(1) << "4 AddInputInternal raw_:     " << raw_;
+    VLOG(1) << "4 AddInputInternal convers_: " << conversion_;
+    VLOG(1) << "4 AddInputInternal pending_: " << pending_;
+    VLOG(1) << "4 AddInputInternal ambiguo_: " << ambiguous_;
     return kNoLoop;
   }
 
+  VLOG(1) << "AddInputInternal pending_: " << pending_;
   // Delete pending_ from raw_ if matched.
   DeleteEnd(pending_, &raw_);
 
@@ -378,6 +460,7 @@ bool CharChunk::AddInputInternal(std::string *input) {
   conversion_.append(entry->result());
   pending_ = entry->pending();
   ambiguous_.clear();
+  VLOG(1) << "AddInputInternal pending_: " << pending_;
 
   if (input->empty() || pending_.empty()) {
     // If the remaining input character or pending character is empty,
@@ -390,6 +473,7 @@ bool CharChunk::AddInputInternal(std::string *input) {
 }
 
 void CharChunk::AddInput(std::string *input) {
+  VLOG(1) << "AddInput " << *input;
   while (AddInputInternal(input)) {
   }
 }
@@ -495,15 +579,21 @@ bool CharChunk::ShouldInsertNewChunk(const CompositionInput &input) const {
 }
 
 void CharChunk::AddCompositionInput(CompositionInput *input) {
+  VLOG(1) << "AddCompositionInput raw " << input->raw();
+  VLOG(1) << "AddCompositionInput mutable raw " << *(input->mutable_raw());
   local_length_cache_ = std::string::npos;
   if (input->has_conversion()) {
+    VLOG(1) << "AddCompositionInput mutable_raw:  " << input->mutable_raw();
+    VLOG(1) << "AddCompositionInput mutable_conv: " << input->mutable_conversion();
     AddInputAndConvertedChar(input->mutable_raw(), input->mutable_conversion());
     return;
   }
 
   if (ShouldInsertNewChunk(*input)) {
+    VLOG(1) << "AKhoge ShouldInsertNewChunk";
     return;
   }
+  VLOG(1) << "AKhoge right before AddInput from AddCompositionInput";
   AddInput(input->mutable_raw());
 }
 

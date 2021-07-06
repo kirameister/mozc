@@ -155,6 +155,9 @@ class CharChunk {
   // Test only
   bool AddInputInternal(std::string *input);
 
+  // time when the previous key-stroke was made
+  std::chrono::system_clock::time_point previous_key_pressed_time_;
+
  private:
   FRIEND_TEST(CharChunkTest, Clone);
   FRIEND_TEST(CharChunkTest, GetTransliterator);

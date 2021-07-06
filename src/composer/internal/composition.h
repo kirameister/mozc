@@ -33,6 +33,7 @@
 #include <list>
 #include <set>
 #include <string>
+#include <chrono>
 
 #include "base/port.h"
 #include "composer/composition_interface.h"
@@ -140,6 +141,9 @@ class Composition : public CompositionInterface {
   const Table *table_;
   CharChunkList chunks_;
   Transliterators::Transliterator input_t12r_;
+
+  // system clock to store when the previous key was pressed
+  std::chrono::system_clock::time_point previous_key_pressed_time_;
 
   DISALLOW_COPY_AND_ASSIGN(Composition);
 };

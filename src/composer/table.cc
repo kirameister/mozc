@@ -462,16 +462,14 @@ bool Table::LoadFromStream(std::istream *is) {
     Util::SplitStringAllowEmpty(line, "\t", &rules);
     // separation between ROMAN and SIMULKANA needs to happen here
     if (!default_simullimit_) {
+      VLOG(2) << "roman table is taken " << default_simullimit_;
       if (rules.size() == 4) {
         const TableAttributes attributes = ParseAttributes(rules[3]);
         AddRuleWithAttributes(rules[0], rules[1], rules[2], attributes);
-        VLOG(2) << "hogege " << line;
       } else if (rules.size() == 3) {
         AddRule(rules[0], rules[1], rules[2]);
-        VLOG(2) << "hogege " << line;
       } else if (rules.size() == 2) {
         AddRule(rules[0], rules[1], empty_pending);
-        VLOG(2) << "hogege " << line;
       } else {
         if (line[0] != '#') {
           LOG(ERROR) << "Format error: " << line;
@@ -479,6 +477,7 @@ bool Table::LoadFromStream(std::istream *is) {
         continue;
       }
     } else { // SIMULKANA
+      VLOG(2) << "Simulkana is taken " << default_simullimit_;
       if (rules[1].empty()) { // if it's single stroke, it's easy
         AddRule(rules[0], rules[1], rules[2]);
       } else if (rules.size() == 3 || rules.size() == 4) {
@@ -487,10 +486,9 @@ bool Table::LoadFromStream(std::istream *is) {
         // before the simul-stroke entries.
         const mozc::composer::Entry *entry = nullptr;
         entry = LookUp(rules[0]);
-        VLOG(2) << "AKhoge " << rules[0] << "\t" << rules[1];
         if (entry != nullptr && entry->pending() != empty_pending) {
           AddRule(entry->pending()+rules[1], rules[2], empty_pending);
-          VLOG(2) << "AKhoge " << entry->pending()+rules[1] << "\t" << rules[2];
+          VLOG(2) << "TABLE ENTRY : " << entry->pending()+rules[1] << "\t" << rules[2];
         }
       } else if (rules.size() == 4) { // TODO to implement independent limit
         //AddRule(rules[0], rules[2], rules[1]);
@@ -698,10 +696,16 @@ const Table *TableManager::GetTable(
       custom_roman_table_fingerprint_ = custom_roman_table_fingerprint;
     }
   }
+  // When custom_simulkana_table is set, force to create new table.
+  bool update_custom_simulkana_table = false;
+  if (config.preedit_method() == config::Config::SIMULKANA) {
+    update_custom_simulkana_table = true;
+  }
+
 
   const auto iterator = table_map_.find(hash);
   if (iterator != table_map_.end()) {
-    if (update_custom_roman_table) {
+    if (update_custom_roman_table || update_custom_simulkana_table) {
       // Delete the previous table to update the table.
       table_map_.erase(iterator);
     } else {

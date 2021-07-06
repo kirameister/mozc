@@ -410,12 +410,14 @@ bool Composer::InsertCharacterInternal(const std::string &key) {
   CompositionInput input;
   input.set_raw(key);
   input.set_is_new_input(is_new_input_);
+  VLOG(1) << "InsertCharacterInternal " << key;
   position_ = composition_->InsertInput(position_, input);
   is_new_input_ = false;
   return true;
 }
 
 void Composer::InsertCharacter(const std::string &key) {
+  VLOG(1) << "InsertCharacter ";
   if (!InsertCharacterInternal(key)) {
     return;
   }
@@ -425,6 +427,7 @@ void Composer::InsertCharacter(const std::string &key) {
 
 void Composer::InsertCharacterForProbableKeyEvents(
     const std::string &key, const ProbableKeyEvents &probable_key_events) {
+  VLOG(1) << "InsertCharacterForProbableKeyEvents ";
   if (!InsertCharacterInternal(key)) {
     return;
   }
@@ -469,6 +472,7 @@ void Composer::SetPreeditTextForTestOnly(const std::string &input) {
     CompositionInput input;
     input.set_raw(character);
     input.set_is_new_input(is_new_input_);
+    VLOG(1) << "SetPreeditTextForTestOnly ";
     position_ = composition_->InsertInput(position_, input);
     is_new_input_ = false;
     begin += mblen;
@@ -499,6 +503,7 @@ bool Composer::InsertCharacterKeyAndPreeditInternal(
   input.set_raw(key);
   input.set_conversion(preedit);
   input.set_is_new_input(is_new_input_);
+  VLOG(1) << "InsertCharacterKeyAndPreeditInternal ";
   position_ = composition_->InsertInput(position_, input);
   is_new_input_ = false;
   return true;
