@@ -61,7 +61,7 @@ const char kRomanTableFile[] = "system://romanji-hiragana.tsv";
 }  // namespace
 
 RomanTableEditorDialog::RomanTableEditorDialog(QWidget *parent)
-    : GenericTableEditorDialog(parent, 3) {
+    : GenericTableEditorDialog(parent, 4) {
   actions_.reset(new QAction *[MENU_SIZE]);
   actions_[NEW_INDEX] = mutable_edit_menu()->addAction(tr("New entry"));
   actions_[REMOVE_INDEX] =
@@ -79,9 +79,9 @@ RomanTableEditorDialog::RomanTableEditorDialog(QWidget *parent)
   GuiUtil::ReplaceWidgetLabels(this);
   dialog_title_ = GuiUtil::ReplaceString(tr("[ProductName] settings"));
   CHECK(mutable_table_widget());
-  CHECK_EQ(mutable_table_widget()->columnCount(), 3);
+  CHECK_EQ(mutable_table_widget()->columnCount(), 4);
   QStringList headers;
-  headers << tr("Input") << tr("Output") << tr("Next input");
+  headers << tr("Input") << tr("Output") << tr("Next input") << tr("PPL (ms)");
   mutable_table_widget()->setHorizontalHeaderLabels(headers);
 
   resize(330, 350);
@@ -115,12 +115,17 @@ std::string RomanTableEditorDialog::GetDefaultRomanTable() {
       result += '\t';
       result += fields[2];
     }
+    if (fields.size() == 4) {
+      result += '\t';
+      result += fields[3];
+    }
     result += '\n';
   }
   return result;
 }
 
 bool RomanTableEditorDialog::LoadFromStream(std::istream *is) {
+  VLOG(1) << "hoge1";
   CHECK(is);
   std::string line;
   std::vector<std::string> fields;
@@ -151,11 +156,14 @@ bool RomanTableEditorDialog::LoadFromStream(std::istream *is) {
         new QTableWidgetItem(QString::fromUtf8(fields[1].c_str()));
     QTableWidgetItem *pending =
         new QTableWidgetItem(QString::fromUtf8(fields[2].c_str()));
+    QTableWidgetItem *prev_pending_limit =
+        new QTableWidgetItem(QString::fromUtf8(fields[3].c_str()));
 
     mutable_table_widget()->insertRow(row);
     mutable_table_widget()->setItem(row, 0, input);
     mutable_table_widget()->setItem(row, 1, output);
     mutable_table_widget()->setItem(row, 2, pending);
+    mutable_table_widget()->setItem(row, 3, prev_pending_limit);
     ++row;
 
     if (row >= max_entry_size()) {
@@ -167,6 +175,7 @@ bool RomanTableEditorDialog::LoadFromStream(std::istream *is) {
   }
 
   UpdateMenuStatus();
+  VLOG(2) << "hoge1";
 
   return true;
 }
@@ -196,6 +205,8 @@ bool RomanTableEditorDialog::Update() {
         TableUtil::SafeGetItemText(mutable_table_widget(), i, 1).toStdString();
     const std::string &pending =
         TableUtil::SafeGetItemText(mutable_table_widget(), i, 2).toStdString();
+    const std::string &prev_pending_limit =
+        TableUtil::SafeGetItemText(mutable_table_widget(), i, 3).toStdString();
     if (input.empty() || (output.empty() && pending.empty())) {
       continue;
     }
@@ -205,7 +216,15 @@ bool RomanTableEditorDialog::Update() {
     if (!pending.empty()) {
       *table += '\t';
       *table += pending;
-    }
+      if (!prev_pending_limit.empty()) {
+        *table += '\t';
+        *table += prev_pending_limit;
+      }
+    } else if (!prev_pending_limit.empty()) {
+        *table += '\t';
+        *table += '\t';
+        *table += prev_pending_limit;
+      }
     *table += '\n';
 
     if (!contains_capital) {

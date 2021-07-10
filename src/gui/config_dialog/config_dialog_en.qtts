@@ -882,6 +882,11 @@
         <translation></translation>
     </message>
     <message>
+        <location filename="roman_table_editor.cc" line="52"/>
+        <source>PPL (ms)</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="roman_table_editor.cc" line="131"/>
         <location filename="roman_table_editor.cc" line="152"/>
         <location filename="roman_table_editor.cc" line="192"/>
