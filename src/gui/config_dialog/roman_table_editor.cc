@@ -125,7 +125,6 @@ std::string RomanTableEditorDialog::GetDefaultRomanTable() {
 }
 
 bool RomanTableEditorDialog::LoadFromStream(std::istream *is) {
-  VLOG(1) << "hoge1";
   CHECK(is);
   std::string line;
   std::vector<std::string> fields;
@@ -175,7 +174,6 @@ bool RomanTableEditorDialog::LoadFromStream(std::istream *is) {
   }
 
   UpdateMenuStatus();
-  VLOG(2) << "hoge1";
 
   return true;
 }
@@ -210,22 +208,28 @@ bool RomanTableEditorDialog::Update() {
     if (input.empty() || (output.empty() && pending.empty())) {
       continue;
     }
+    bool number_in_ppl = false;
+    if (!prev_pending_limit.empty() && std::all_of(prev_pending_limit.cbegin(),
+                prev_pending_limit.cend(), isdigit)) {
+      number_in_ppl = true;
+    }
     *table += input;
     *table += '\t';
     *table += output;
     if (!pending.empty()) {
       *table += '\t';
       *table += pending;
-      if (!prev_pending_limit.empty()) {
-        *table += '\t';
-        *table += prev_pending_limit;
-      }
-    } else if (!prev_pending_limit.empty()) {
-        *table += '\t';
-        *table += '\t';
-        *table += prev_pending_limit;
-      }
+    } else {
+      *table += '\t';
+    }
+    if (number_in_ppl) {
+      *table += '\t';
+      *table += prev_pending_limit;
+    } else {
+      *table += '\t';
+    }
     *table += '\n';
+    VLOG(1) << *table;
 
     if (!contains_capital) {
       std::string lower = input;
