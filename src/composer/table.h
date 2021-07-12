@@ -62,20 +62,20 @@ class TypingModel;
 
 // This is a bitmap representing Entry's additional attributes.
 enum TableAttribute {
-  NO_TABLE_ATTRIBUTE = 0,
+  NO_TABLE_ATTRIBUTE = 1024,
   // When the typing is beginning, the rule with this attribute is
   // executed even if the previous characters can be a part of other
   // rules.
-  NEW_CHUNK = 1,
+  NEW_CHUNK = 2048,
   // This flag suppresses any transliteration performed in CharChunk
   // and treated as an as-is key event.
-  NO_TRANSLITERATION = 2,
+  NO_TRANSLITERATION = 4096,
   // This flag indicates that the composition should be ended and committed.
-  DIRECT_INPUT = 4,
+  DIRECT_INPUT = 8192,
 
   // This flag treats the next typing as a new input.  This flag is
   // used with the NEW_CHUNK flag.
-  END_CHUNK = 8,
+  END_CHUNK = 16384,
 };
 typedef uint32_t TableAttributes;
 
