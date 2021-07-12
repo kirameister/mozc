@@ -32,6 +32,9 @@
 #include <set>
 #include <string>
 #include <vector>
+// following required for simulkana
+#include <iostream>
+#include <chrono>
 
 #include "base/logging.h"
 #include "base/util.h"
@@ -115,6 +118,8 @@ CharChunk::CharChunk(Transliterators::Transliterator transliterator,
       attributes_(NO_TABLE_ATTRIBUTE),
       local_length_cache_(std::string::npos) {
   DCHECK_NE(Transliterators::LOCAL, transliterator);
+  // initialize previously-pressed key
+  previous_key_pressed_time_ = std::chrono::system_clock::now();
 }
 
 void CharChunk::Clear() {
@@ -301,8 +306,43 @@ bool CharChunk::AddInputInternal(std::string *input) {
   size_t key_length = 0;
   bool fixed = false;
   std::string key = pending_ + *input;
-  const Entry *entry = table_->LookUpPrefix(key, &key_length, &fixed);
+  const Entry* entry = table_->LookUpPrefix(key, &key_length, &fixed);
   local_length_cache_ = std::string::npos;
+
+  // check if prev_pending_limit is set
+  VLOG(1) << "0 AddInputInternal raw_:     " << raw_;
+  VLOG(1) << "0 AddInputInternal convers_: " << conversion_;
+  VLOG(1) << "0 AddInputInternal pending_: " << pending_;
+  VLOG(1) << "0 AddInputInternal ambiguo_: " << ambiguous_;
+  if ((0 < static_cast<int>(entry->attributes()) &&
+      static_cast<int>(entry->attributes()) < static_cast<int>(NO_TABLE_ATTRIBUTE)) ||
+      entry == nullptr) {
+    VLOG(1) << "Current entry has PPL: " << entry->attributes();
+    int32 elapsed = 
+      std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()
+      - previous_key_pressed_time_).count();
+    VLOG(1) << "elapsed time: " << elapsed;
+    if (static_cast<int>(entry->attributes()) < elapsed) {
+      VLOG(2) << "elapsed time is greater than limit, so conv-submit needs to happen";
+      conversion_.append(pending_);
+      pending_.clear();
+      ambiguous_.clear();
+      key = *input;
+      // this line is required for properly processing the latest typed key
+      entry = table_->LookUpPrefix(key, &key_length, &fixed);
+      VLOG(1) << "1 AddInputInternal raw_:     " << raw_;
+      VLOG(1) << "1 AddInputInternal convers_: " << conversion_;
+      VLOG(1) << "1 AddInputInternal pending_: " << pending_;
+      VLOG(1) << "1 AddInputInternal ambiguo_: " << ambiguous_;
+    }
+  }
+  else {
+    VLOG(1) << "2 AddInputInternal raw_:     " << raw_;
+    VLOG(1) << "2 AddInputInternal convers_: " << conversion_;
+    VLOG(1) << "2 AddInputInternal pending_: " << pending_;
+    VLOG(1) << "2 AddInputInternal ambiguo_: " << ambiguous_;
+  }
+  previous_key_pressed_time_ = std::chrono::system_clock::now();
 
   if (entry == nullptr) {
     if (key_length == 0) {

@@ -423,6 +423,12 @@ const char kAttributeDelimiter[] = " ";
 TableAttributes ParseAttributes(const std::string &input) {
   TableAttributes attributes = NO_TABLE_ATTRIBUTE;
 
+  if (!input.empty() && std::all_of(input.cbegin(), input.cend(), isdigit) && 
+      stoi(input) < static_cast<int>(NO_TABLE_ATTRIBUTE)) {
+    VLOG(2) << "PPL detected: " << input;
+    //return attributes;
+    return static_cast<TableAttributes>(stoi(input));
+  }
   std::vector<std::string> attribute_strings;
   Util::SplitStringAllowEmpty(input, kAttributeDelimiter, &attribute_strings);
 
@@ -457,6 +463,8 @@ bool Table::LoadFromStream(std::istream *is) {
     if (rules.size() == 4) {
       const TableAttributes attributes = ParseAttributes(rules[3]);
       AddRuleWithAttributes(rules[0], rules[1], rules[2], attributes);
+      VLOG(1) << "rule added with attribute : " << rules[0] <<
+          "\t" << rules[1] << "\t" << rules[2] << '\t' << attributes;
     } else if (rules.size() == 3) {
       AddRule(rules[0], rules[1], rules[2]);
     } else if (rules.size() == 2) {
