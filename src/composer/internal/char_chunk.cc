@@ -388,17 +388,8 @@ bool CharChunk::AddInputInternal(std::string *input) {
       pending_ = key;
       ambiguous_ = entry->result();
     }
-    VLOG(1) << "3 AddInputInternal input:    " << input;
-    VLOG(1) << "3 AddInputInternal key :     " << key;
-    VLOG(1) << "3 AddInputInternal key_len:  " << key_length;
-    VLOG(1) << "3 AddInputInternal fixed:    " << fixed;
-    VLOG(1) << "3 AddInputInternal raw_:     " << raw_;
-    VLOG(1) << "3 AddInputInternal convers_: " << conversion_;
-    VLOG(1) << "3 AddInputInternal pending_: " << pending_;
-    VLOG(1) << "3 AddInputInternal ambiguo_: " << ambiguous_;
     return kNoLoop;
   }
-  VLOG(1) << "4 AddInputInternal";
 
   // Delete pending_ from raw_ if matched.
   DeleteEnd(pending_, &raw_);
